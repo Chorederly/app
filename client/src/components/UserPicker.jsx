@@ -5,13 +5,17 @@ import {ChoreContext} from '../context/ChoreContext'
 import UserCard from './UserCard'
 
 const Wrapper = styled.div `
-display: flex;
-flex-direction: column;
-width: max-content;
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 1fr auto;
+flex-direction: row;
+flex-wrap: werap;
+width: 100%;
 `
 const Header = styled.h1`
 text-align: center;
 grid-column: 1/3;
+width: 100%;
 color: ${props=>props.theme.dark};
 justify-content: center;
 align-items: center;

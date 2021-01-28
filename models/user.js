@@ -7,18 +7,30 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
-  age: {
-    type: Number,
-    default: null
+  adult: {
+    type: Boolean,
+    default: false
   },
   points: {
     type: Number,
-    default: 0
+    default: 0, 
+    min: 0
   },
-
+  rewardRecord: {
+    type: [Object]
+  },
   pastChores: {
-    type: Schema.Types.ObjectId,
-    ref: "Chores"
+    type: [Object]
+  },
+  pin: {
+    type: Number,
+    default: null,
+    validate: {
+      validator: function(v) {
+        return /\d{4}/.test(v);
+      }, 
+      message: props => `Please enter a 4 digit PIN`
+    }
   }
 
 })

@@ -9,7 +9,7 @@ const CardWrapper = styled.div `
     //border: thick solid ${props => props.theme.primary};
     //box-shadow: inset 2px 2px 2px 0 rgba(255,255,255,.7), 2px 2px 2px 0 rgba(0,0,0,.7);
     border-radius: 10px;
-    width: 100%;
+    max-width: max-content;
     height: auto;
     //grid-column: ${props => props.column};
     //sgrid-row: ${props => props.row};
@@ -17,13 +17,15 @@ const CardWrapper = styled.div `
     margin: 20px;
     background-color: ${props=>props.theme.light};
     color: ${props=>props.theme.secondary};
-    box-shadow: 3px 3px 3px${props=>props.theme.colors.black};
+   // box-shadow: 3px 3px 3px${props=>props.theme.colors.black};
     border: thin solid ${props=>props.theme.dark};
     cursor: pointer;
     
 `
 const Header = styled.h2 `
 color: ${props=>props.theme.dark};
+text-transform: capitalize;
+
 `
 const List = styled.ul`
 list-style: none;
@@ -33,11 +35,13 @@ display: inline-flex;
 `
 const Paragraph = styled.p `
 text-transform: capitalize;
-font-size: 1.2rem;
+font-size: 1rem;
+color: ${props=>props.theme.dark};
+
 `
 
 const UserCard = props => {
-    const {users, setUsers} = useContext(UserContext)
+    const {users, signIn} = useContext(UserContext)
     const {chores} = useContext(ChoreContext)
     const [usersChores, setUsersChores] = useState([])
     useEffect(() => {
@@ -46,11 +50,8 @@ const UserCard = props => {
     }, [chores])
     const handleClick=(e)=>{
         e.preventDefault()
-        const currentUser = users.all.find(user=> user._id === props._id)
-        setUsers(prev=>({
-            ...prev, 
-            current: currentUser
-        }))
+        signIn(props._id)
+    
     }
   return (
     <CardWrapper onClick={handleClick}>

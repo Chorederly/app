@@ -5,8 +5,8 @@ const UserContext = React.createContext(null)
 
 const UserContextProvider = ({children}) => {
   const [users,
-    setUsers] = useState({all: [], current: null})
-  
+    setUsers] = useState({all: [], current: null, adultLoggedIn: false})
+
   const addUser = (info) => {
     axios
       .post("/users", info)
@@ -16,31 +16,55 @@ const UserContextProvider = ({children}) => {
       .catch(err => console.log(`${info.userName} user in use`))
   }
 
-    const updateUsers = ()=>{
+  const updateUsers = () => {
     axios
-    .get("/users")
-    .then(resp => {
+      .get("/users")
+      .then(resp => {
         console.log(resp)
-      setUsers(prev => ({
-        ...prev,
-        all: resp.data
-      }))
-    })
-    .catch(err => console.log(err))
+        setUsers(prev => ({
+          ...prev,
+          all: resp.data
+        }))
+        if (users.current !== null) {
+          setUsers(prevState=>(
+            {adultLoggedIn: prevState.current.adult}
+            ))
+        }
+      })
+      .catch(err => console.log(err))
   }
   useEffect(() => {
-   updateUsers()
+    updateUsers()
   }, [])
+  
+  const collectPoints = (points, userId)=>{
+    axios.put(`/users/${userId}, {points}`).then(resp=>{
+      updateUsers();
+    }).catch(err=>console.log(err))
+  }
 
-  const signIn = (info) => {
-    axios.get("/users")
+  const signIn = (userId) => {
+    const currentUser = users.all.find(user=> user._id === userId)
+        setUsers(prev=>({
+            ...prev, 
+            current: currentUser
+        }))
+        updateUsers()
+        console.log(`current: ${currentUser.adult }`)
+        if (currentUser !== null) {
+          setUsers(prevState=>(
+            {adultLoggedIn: currentUser.adult}
+            ))
+        }
   }
   return (
-    <UserContext.Provider value={{
+    <UserContext.Provider
+      value={{
       users,
       setUsers,
       updateUsers,
-      addUser
+      addUser, 
+      signIn
     }}>
       {children}
     </UserContext.Provider>

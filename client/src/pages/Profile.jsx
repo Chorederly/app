@@ -4,6 +4,7 @@ import {UserContext} from '../context/UserContext'
 import ChorePicker from '../components/ChorePicker'
 import UserPicker from '../components/UserPicker'
 import UserChores from '../components/UserChores'
+import Intro from '../components/Intro'
 
 const ProfileWrapper = styled.div `
         margin: 0;

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
-import NewChoreForm from '../components/NewChoreForm'
-import NewUserForm from '../components/NewUserForm'
-
+import {UserContext} from '../context/UserContext'
+import Intro from '../components/Intro'
+import Controls from '../components/Controls'
 function Settings() {
+  const {users} = useContext(UserContext)
   const SettingsWrapper = styled.div `
         margin: 0;
         padding: 0;
@@ -15,8 +16,10 @@ function Settings() {
     `
   return (
     <SettingsWrapper>
-      <NewChoreForm/>
-      <NewUserForm/>
+      {users.all.length === 0 ? 
+      <Intro/>
+    : <Controls/>
+    }
     </SettingsWrapper>
   )
 }

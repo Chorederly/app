@@ -22,10 +22,6 @@ const choreSchema = new Schema({
         type: Boolean,
         default: true
     },
-    minage: {
-        type: Number,
-        default: null
-    },
     frequency: {
         type: String,
         enum: [
@@ -38,7 +34,12 @@ const choreSchema = new Schema({
         default: false
     },
     history: {
-        type: [Date]
+        type: [Object]
+    },
+    needsApproval: {
+        type: Boolean, 
+        default: false
     }
+
 })
 module.exports = mongoose.model("Chore", choreSchema)

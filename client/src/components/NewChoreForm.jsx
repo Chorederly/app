@@ -5,39 +5,39 @@ import axios from 'axios'
 
 //styled components
 const FormWrapper = styled.form `
-       background-color: ${props => props.theme.tertiary};
-      padding: 0 15px;
+       background-color: ${props => props.theme.highlight};
+        padding: 0 15px;
         display: grid;
         grid-template-columns: auto 1fr;
-         
-        box-shadow: 2px 2px 2px 2px rgba(35, 35, 35, .5);
+        //box-shadow: 2px 2px 2px 2px rgba(35, 35, 35, .5);
         place-content: center;
         justify-content: center;
         align-items: center;
-        margin: 15px 0;
+        margin: 50px auto;
+        width: 100%;
         `
 const Label = styled.label `
         padding: 0 15px;
         grid-column: 1/2;
         font-size: 1.2rem;
         line-height: 1.2rem;
-        color: ${props => props.theme.primary};
+        color: ${props => props.theme.dark};
         `
 const Option = styled.option `
         margin: 0 15px;
         //grid-column: 2/3;
         font-size: 1rem;
         line-height: 1rem;
-        background-color: ${props => props.theme.highlight};
-    color:  ${props => props.theme.select};
+        background-color: ${props => props.theme.dark};
+    color:  ${props => props.theme.dark};
         `
 const Header = styled.h1 `
     grid-column: 1/3;
-    color: ${props => props.theme.primary};
+    color: ${props => props.theme.dark};
     text-align: center;
     `
 const Select = styled.select `
-   background-color: ${props => props.theme.primary};
+   background-color: ${props => props.theme.dark};
     color:  ${props => props.theme.light};
     outline-color: ${props => props.theme.highlight};
     margin: 0 5px;
@@ -55,7 +55,7 @@ const Input = styled.input `
     grid-column: 2/3;
     outline-color: ${props => props.theme.highlight};
     color: ${props => props.theme.light};
-    background-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.dark};
     margin:5px;
     padding: 5px;
     
@@ -69,15 +69,15 @@ const Row = styled.div `
     grid-row: ${props => props.row};
     `
 const Button = styled.button `
-    padding: 3px;
+    padding: 3px 12px;
     font-size: 1.2rem;
-    background-color: ${props => props.theme.highlight};
-    color:  ${props => props.theme.primary};
+    background-color: ${props => props.theme.primary_l};
+    color:  ${props => props.theme.dark};
     grid-column: 2/3;
     font-weight: 500;
     margin:5px;
     outline-color: ${props => props.theme.light};
-    max-width: 30%;
+    width: max-content;
     `
 const Radio = styled.input `
    margin: 0 10px;
@@ -89,11 +89,11 @@ const TextArea = styled.textarea `
     box-sizing: border-box;
     font-size: .75rem;
     line-height: 1rem;
-    background-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.dark};
     color:  ${props => props.theme.light};
     outline-color: ${props => props.theme.highlight};
     resize: vertical;
-    
+    box-shadow: inset 2px 2px black;
     `
 
 
@@ -101,13 +101,20 @@ function NewChoreForm(props) {
 
   //standard controlled component form-handling
   const [state,
-    setState] = useState({name: "", details: "", pointValue: 0, frequency: "", minage: 0})
-  const handleChange = (e) => {
-    const {name, value} = e.target
+    setState] = useState({name: "", details: "", pointValue: 0, frequency: "", needsAproval: false})
+  
+    const handleChange = (e) => {
+    const {name, value, type} = e.target
+    if (type === "checkbox"){
+      setState(prevstate=>(
+        {[name]: !prevstate[name]}))
+    }
+    else {
     setState(prev => ({
       ...prev,
       [name]: value
     }))
+  }
   }
   //When form is submitted we make a new 
   const handleSubmit = (e) => {
@@ -167,10 +174,10 @@ function NewChoreForm(props) {
         onChange={handleChange}/>
       <Label htmlFor="minage">Min Age</Label>
       <Input
-        type="number"
-        name="minage"
-        id="minage"
-        value={state.minage}
+        type="checkbox"
+        name="needsApproval"
+        id="needsApproval"
+        checked={state.needsAproval}
         onChange={handleChange}/>
       <Button type="submit">Add</Button>
     </FormWrapper>
