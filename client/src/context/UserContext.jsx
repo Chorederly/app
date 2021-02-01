@@ -33,6 +33,13 @@ const UserContextProvider = ({children}) => {
       })
       .catch(err => console.log(err))
   }
+  function deleteUser(userId) {
+    axios.delete(`/users/${userId}`)
+    .then(res => {
+        setUsers(prevUsers => prevUsers.filter(user => user._id !== userId))
+    })
+    .catch(err => console.log(err))
+}
   useEffect(() => {
     updateUsers()
   }, [])
@@ -61,7 +68,8 @@ const UserContextProvider = ({children}) => {
       setUsers,
       updateUsers,
       addUser, 
-      signIn
+      signIn,
+      deleteUser
     }}>
       {children}
     </UserContext.Provider>

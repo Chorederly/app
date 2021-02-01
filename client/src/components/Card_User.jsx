@@ -2,6 +2,8 @@ import React, {useContext, useState, useEffect} from 'react'
 import styled, {withTheme} from 'styled-components'
 import { ChoreContext } from '../context/ChoreContext'
 import {UserContext} from '../context/UserContext'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faUserMinus} from '@fortawesome/free-solid-svg-icons'
 
 const CardWrapper = styled.div `
     display: flex;
@@ -39,6 +41,19 @@ font-size: 1rem;
 color: ${props=>props.theme.dark};
 
 `
+const Button = styled(FontAwesomeIcon)`
+  color: ${props=>props.theme.colors.red};
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  text-shadow: 2px 2px 5px #000;
+  transition: .2s ease all;
+  cursor: pointer;
+  &:hover{
+    color: ${props=>props.theme.colors.red_light};
+  }
+`
 
 const UserCard = props => {
     const {users, signIn} = useContext(UserContext)
@@ -62,7 +77,7 @@ const UserCard = props => {
         )})}
         </Paragraph>
       <Paragraph>Points: {props.points}</Paragraph>
-     
+      <Button icon={faUserMinus} onClick={() => props.deleteUser()}>Delete User</Button>
     </CardWrapper>
 
   )
