@@ -23,8 +23,8 @@ const userSchema = new Schema({
     type: [Object]
   },
   pin: {
-    type: Number,
-    default: null,
+    type: String,
+    default: "0000",
     validate: {
       validator: function(v) {
         return /\d{4}/.test(v);
