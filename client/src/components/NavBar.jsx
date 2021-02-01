@@ -8,10 +8,10 @@ import {faHome, faClipboard, faUserCog, faSignInAlt, faSignOutAlt} from '@fortaw
 const Icon = styled(FontAwesomeIcon)`
 
 `
-const Header = styled.h1`
+const Header = styled.h1 `
 display: inline;
 align-self: flex-start;
-color: ${props=>props.theme.highlight };
+color: ${props => props.theme.highlight};
 width: 100%;
 margin: 0 20px;
 font-size: 2rem;
@@ -29,7 +29,6 @@ const Nav = styled.nav `
     bottom: 0;
     overflow-y: hidden;
     `
-   
 const StyledNavLink = styled(NavLink)`
       padding: 0 35px;
       margin: 0;
@@ -49,17 +48,20 @@ function NavBar(props) {
     <Nav>
       <StyledNavLink
         activeStyle={{
-        background: "#948d94",
+        background: "#bfb8bf",
         color: "#313133"
       }}
-        to="/" exact><Icon icon={faClipboard}/></StyledNavLink>
-        {users.adultLoggedIn ?
+        to="/"
+        exact>
+        <Icon icon={faClipboard}/></StyledNavLink>
+
       <StyledNavLink
         activeStyle={{
-        background: "#948d94",
+        background: "#bfb8bf",
         color: "#313133"
       }}
-        to="/settings"><Icon icon={faUserCog}/></StyledNavLink> : null}
+        to="/settings"><Icon icon={faUserCog}/></StyledNavLink>
+
     </Nav>
   )
 }

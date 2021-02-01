@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styled, {ThemeProvider} from 'styled-components'
-import {UserContextProvider} from './context/UserContext'
+import {UserContextProvider, UserContext} from './context/UserContext'
 import {ChoreContextProvider} from './context/ChoreContext'
 import {Route, Link, Switch, useHistory} from 'react-router-dom'
 import NavBar from './components/NavBar'
@@ -25,7 +25,10 @@ const AppWrapper = styled.div `
   linear-gradient(315deg, ${props=>props.theme.colors.grey_light} 25%, transparent 25%),
   linear-gradient(45deg, ${props=>props.theme.colors.grey_light} 25%, transparent 25%);	
   background-size: 2em 2em; */
-  background-color:  ${props=>props.theme.primary_l} ;
+  //background-color:  ${props=>props.theme.light} ;
+  background-color: #f5df4c;
+background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 
 `
 const Content = styled.main `
@@ -50,7 +53,7 @@ function App() {
             </Route>
           </Switch>
         </Content>
-        <NavBar />
+        <NavBar/>
       </AppWrapper>
     </UserContextProvider>
     </ChoreContextProvider>

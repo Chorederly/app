@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import styled, {withTheme} from 'styled-components'
 import {UserContext} from '../context/UserContext'
 import {ChoreContext} from '../context/ChoreContext'
-import UserCard from './UserCard'
+import UserCard from './Card_User'
 
 const Wrapper = styled.div `
 display: grid;
@@ -20,22 +20,13 @@ color: ${props=>props.theme.dark};
 justify-content: center;
 align-items: center;
 `
-const UserPicker = props => {
-  const {users, setUsers} = useContext(UserContext)
+const UserGroup = props => {
+  const {users} = useContext(UserContext)
   const {chores} = useContext(ChoreContext)
   const userCards = users
     .all
-    .map((user) =>< UserCard userName = {
-      user.userName
-    }
-    key={user._id}
-    _id = {user._id}
-    chores = {
-      chores.filter(chore=>chore.user === user._id)
-    }
-    points = {
-      user.points 
-    } />)
+    .map((user) =>< UserCard key={user._id} {...user}
+    chores = {chores.filter(chore=>chore.user === user._id)} />)
   return (
     <Wrapper>
         <Header>Who Are You?</Header>
@@ -44,4 +35,4 @@ const UserPicker = props => {
   )
 }
 
-export default UserPicker
+export default UserGroup

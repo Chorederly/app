@@ -15,10 +15,10 @@ const CardWrapper = styled.div `
     //sgrid-row: ${props => props.row};
     padding: 20px;
     margin: 20px;
-    background-color: ${props=>props.theme.light};
+    background-color: ${props=>props.theme.light_50};
     color: ${props=>props.theme.secondary};
    // box-shadow: 3px 3px 3px${props=>props.theme.colors.black};
-    border: thin solid ${props=>props.theme.dark};
+    border: thick solid ${props=>props.theme.dark};
     cursor: pointer;
     
 `
@@ -51,7 +51,7 @@ const UserCard = props => {
     const handleClick=(e)=>{
         e.preventDefault()
         signIn(props._id)
-    
+         
     }
   return (
     <CardWrapper onClick={handleClick}>

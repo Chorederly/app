@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import {UserContext} from '../context/UserContext'
 import Intro from '../components/Intro'
 import Controls from '../components/Controls'
-function Settings() {
-  const {users} = useContext(UserContext)
-  const SettingsWrapper = styled.div `
+const SettingsWrapper = styled.div `
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -14,12 +12,13 @@ function Settings() {
         display: flex;
         flex-direction: column;
     `
+function Settings() {
+  const {users} = useContext(UserContext)
   return (
     <SettingsWrapper>
-      {users.all.length === 0 ? 
+      {users.all.length === 0 ?
       <Intro/>
-    : <Controls/>
-    }
+      : <Controls/>}
     </SettingsWrapper>
   )
 }

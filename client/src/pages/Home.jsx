@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
-import UserPicker from '../components/UserPicker'
+import UserGroup from '../components/Group_Users'
 import {UserContext} from '../context/UserContext'
 const HomeWrapper = styled.div `
     margin: 0;
@@ -19,7 +19,7 @@ function Home() {
   return (
     <HomeWrapper>
       {users.current
-        ? null : <UserPicker/>
+        ? null : <UserGroup/>
         }
     </HomeWrapper>
   )

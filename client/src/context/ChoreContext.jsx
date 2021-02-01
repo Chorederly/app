@@ -20,7 +20,7 @@ const ChoreContextProvider = ({children}) => {
         console.log(resp)
         console.log(`setting Chores from: ${chores}`)
         const orderedChores = resp.data.sort((a, b)=> a.completed - b.completed)
-        setChores(orderedChores )
+        setChores(orderedChores)
         console.log(`to: ${chores}`)
       })
       .catch(err => console.log(err))
