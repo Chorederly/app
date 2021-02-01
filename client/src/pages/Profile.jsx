@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
 import {UserContext} from '../context/UserContext'
-import ChorePicker from '../components/ChorePicker'
-import UserPicker from '../components/UserPicker'
-import UserChores from '../components/UserChores'
+import ChoreGroup from '../components/Group_Chores'
+import UserGroup from '../components/Group_Users'
+import UsersChoresGroup from '../components/Group_UsersChores'
 import Intro from '../components/Intro'
 
 const ProfileWrapper = styled.div `
@@ -25,8 +25,8 @@ function Profile() {
   return (
     <ProfileWrapper>
       {users.current === null
-        ? <UserPicker/>
-        : <> <UserChores/> < ChorePicker /> </>
+        ? <UserGroup/>
+        : <> <UsersChoresGroup/> < ChoreGroup /> </>
 }
 
     </ProfileWrapper>

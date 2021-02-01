@@ -1,21 +1,19 @@
-// This is the form for adding a new user to the household, accessible via the
-// settings page
-import React, {useState, useContext} from 'react'
-import {UserContext} from '../context/UserContext'
+//form used to add a new chore to the database
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
-
-//styled components / CSS in JS
+//styled components
 const FormWrapper = styled.form `
-       background-color: ${props => props.theme.highlight};
+      // background-color: ${props => props.theme.highlight};
         padding: 0 15px;
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 1fr 3fr;
         //box-shadow: 2px 2px 2px 2px rgba(35, 35, 35, .5);
         place-content: center;
         justify-content: center;
         align-items: center;
-        margin: 15px auto;
+        margin: 50px auto;
         width: 100%;
         `
 const Label = styled.label `
@@ -71,7 +69,7 @@ const Row = styled.div `
     grid-row: ${props => props.row};
     `
 const Button = styled.button `
-    padding: 3px 8px;
+    padding: 3px 12px;
     font-size: 1.2rem;
     background-color: ${props => props.theme.primary_l};
     color:  ${props => props.theme.dark};
@@ -98,46 +96,90 @@ const TextArea = styled.textarea `
     box-shadow: inset 2px 2px black;
     `
 
-    
-function NewUserForm(props) {
-  //Form control
+function NewRewardForm(props) {
+
+  //standard controlled component form-handling
   const [state,
-    setState] = useState({userName: "", age: 0})
+    setState] = useState({name: "", details: "", pointValue: 0, frequency: "", needsAproval: false})
+
   const handleChange = (e) => {
-    const {name, value} = e.target
-    setState(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    const {name, value, type} = e.target
+    if (type === "checkbox") {
+      setState(prevstate => ({
+        [name]: !prevstate[name]
+      }))
+    } else {
+      setState(prev => ({
+        ...prev,
+        [name]: value
+      }))
+    }
   }
-  //add new user via UserContext triggered by form submit
-  const {addUser} = useContext(UserContext)
+  //When form is submitted we make a new
   const handleSubmit = (e) => {
     e.preventDefault()
-    addUser(state)
-    setState({userName: "", age: 0})
+    const newReward = {
+      ...state,
+      user: null,
+      available: true
+    }
+    axios
+      .post("/chores", newReward)
+      .then(resp => {
+        console.log("chore added")
+      })
+      .catch(err => console.log(err))
   }
 
   return (
     <FormWrapper onSubmit={handleSubmit}>
-      <Header>Add New User</Header>
-      <Header></Header>
-      <Label htmlFor="userName">Name</Label>
+      <Row>
+        <Header>
+          Add New Reward
+        </Header>
+      </Row>
+      <Label htmlFor="name">Title</Label>
+      <Input id="name" name="name" value={state.name} onChange={handleChange}/>
+      <Label htmlFor="details">Description</Label>
+      <TextArea
+        id="details"
+        name="details"
+        value={state.details}
+        onChange={handleChange}
+        rows="3"/>
+      <Label>Frequency</Label>
+      <Select value={state.frequency} onChange={handleChange} name="frequency">
+        <Option value="">
+          Select One
+        </Option>
+        <Option value="daily">
+          Daily
+        </Option>
+        <Option value="weekly">
+          Weekly
+        </Option>
+        <Option value="as needed">
+          As Needed
+        </Option>
+      </Select>
+      <Label htmlFor="pointvalue">Points</Label>
       <Input
-        name="userName"
-        id="userName"
-        value={state.userName}
-        onChange={handleChange}/>
-      <Label htmlFor="age">Age</Label>
-      <Input
+        min="0"
+        id="pointvalue"
         type="number"
-        name="age"
-        id="age"
-        value={state.age}
+        name="pointValue"
+        value={state.pointValue}
         onChange={handleChange}/>
-      <Button type="submit">Submit</Button>
+      <Label htmlFor="needsApproval">Checkoff</Label>
+      <Input
+        type="checkbox"
+        name="needsApproval"
+        id="needsApproval"
+        checked={state.needsAproval}
+        onChange={handleChange}/>
+      <Button type="submit">Add</Button>
     </FormWrapper>
   )
 }
 
-export default NewUserForm
+export default NewRewardForm

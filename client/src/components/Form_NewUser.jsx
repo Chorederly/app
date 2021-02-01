@@ -1,26 +1,27 @@
-//form used to add a new chore to the database
-import React, {useState} from 'react'
+// This is the form for adding a new user to the household, accessible via the
+// settings page
+import React, {useState, useContext} from 'react'
+import {UserContext} from '../context/UserContext'
 import styled from 'styled-components'
-import axios from 'axios'
 
-//styled components
+//styled components / CSS in JS
 const FormWrapper = styled.form `
-       background-color: ${props => props.theme.highlight};
+      // background-color: ${props => props.theme.highlight};
         padding: 0 15px;
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 1fr 3fr 1fr;
         //box-shadow: 2px 2px 2px 2px rgba(35, 35, 35, .5);
         place-content: center;
         justify-content: center;
         align-items: center;
-        margin: 50px auto;
-        width: 100%;
+        
         `
 const Label = styled.label `
         padding: 0 15px;
-        grid-column: 1/2;
+        grid-column: ${props => props.column};
         font-size: 1.2rem;
         line-height: 1.2rem;
+        grid-row: 2/3;
         color: ${props => props.theme.dark};
         `
 const Option = styled.option `
@@ -32,7 +33,8 @@ const Option = styled.option `
     color:  ${props => props.theme.dark};
         `
 const Header = styled.h1 `
-    grid-column: 1/3;
+    grid-column: ${props => props.column};
+    grid-row: 1/2;
     color: ${props => props.theme.dark};
     text-align: center;
     `
@@ -52,13 +54,13 @@ const Subheader = styled.h3 `
     `
 const Input = styled.input `
     padding: 3px;
-    grid-column: 2/3;
+   grid-row: 2/3;
     outline-color: ${props => props.theme.highlight};
     color: ${props => props.theme.light};
     background-color: ${props => props.theme.dark};
     margin:5px;
     padding: 5px;
-    
+    grid-column: ${props => props.column};
     `
 const Row = styled.div `
     display: flex;
@@ -69,7 +71,7 @@ const Row = styled.div `
     grid-row: ${props => props.row};
     `
 const Button = styled.button `
-    padding: 3px 12px;
+    padding: 3px 8px;
     font-size: 1.2rem;
     background-color: ${props => props.theme.primary_l};
     color:  ${props => props.theme.dark};
@@ -96,92 +98,60 @@ const TextArea = styled.textarea `
     box-shadow: inset 2px 2px black;
     `
 
-
-function NewChoreForm(props) {
-
-  //standard controlled component form-handling
+function NewUserForm(props) {
+  //Form control
+  const initialState = {
+    userName: "",
+    adult: props.adult || false
+  }
   const [state,
-    setState] = useState({name: "", details: "", pointValue: 0, frequency: "", needsAproval: false})
-  
-    const handleChange = (e) => {
+    setState] = useState(initialState)
+
+  const handleChange = (e) => {
     const {name, value, type} = e.target
-    if (type === "checkbox"){
-      setState(prevstate=>(
-        {[name]: !prevstate[name]}))
+    if (type === "checkbox") {
+      setState(prev => ({
+        ...prev,
+        [name]: !prev[name]
+      }))
+    } else {
+      setState(prev => ({
+        ...prev,
+        [name]: value
+      }))
     }
-    else {
-    setState(prev => ({
-      ...prev,
-      [name]: value
-    }))
   }
-  }
-  //When form is submitted we make a new 
+  //add new user via UserContext triggered by form submit
+  const {addUser} = useContext(UserContext)
   const handleSubmit = (e) => {
     e.preventDefault()
-    const newChore = {
-      ...state,
-      user: null,
-      available: true
+    addUser(state)
+    setState({userName: "", adult: false})
+    if (props.callback) {
+      props.callback()
     }
-    axios
-      .post("/chores", newChore)
-      .then(resp => {
-        console.log("chore added")
-      })
-      .catch(err => console.log(err))
-    }
-    
+  }
 
   return (
     <FormWrapper onSubmit={handleSubmit}>
-      <Row>
-        <Header>
-          Add New Chore
-        </Header>
-      </Row>
-      <Label htmlFor="name">Title</Label>
-      <Input id="name" name="name" value={state.name} onChange={handleChange}/>
-      <Label htmlFor="details">Description</Label>
-      <TextArea
-        id="details"
-        name="details"
-        value={state.details}
-        onChange={handleChange}
-        rows="3"/>
-      <Label>Frequency</Label>
-      <Select value={state.frequency} onChange={handleChange} name="frequency">
-        <Option value="">
-          Select One
-        </Option>
-        <Option value="daily">
-          Daily
-        </Option>
-        <Option value="weekly">
-          Weekly
-        </Option>
-        <Option value="as needed">
-          As Needed
-        </Option>
-      </Select>
-      <Label htmlFor="pointvalue">Points</Label>
+      <Header column="1/4">Add New User</Header>
+      <Label column="1/2" htmlFor="userName">Name</Label>
       <Input
-        min="0"
-        id="pointvalue"
-        type="number"
-        name="pointValue"
-        value={state.pointValue}
-        onChange={handleChange}/>
-      <Label htmlFor="minage">Min Age</Label>
+        name="userName"
+        id="userName"
+        value={state.userName}
+        onChange={handleChange}
+        column="2/3"/><>
+      <Label htmlFor="adult">Adult</Label>
       <Input
         type="checkbox"
-        name="needsApproval"
-        id="needsApproval"
-        checked={state.needsAproval}
-        onChange={handleChange}/>
-      <Button type="submit">Add</Button>
+        name="adult"
+        id="adult"
+        checked={state.adult}
+        onChange={handleChange}/></>
+      <Button type="submit">Submit</Button>
     </FormWrapper>
   )
 }
 
-export default NewChoreForm
+export default NewUserForm

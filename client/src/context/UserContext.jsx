@@ -54,16 +54,13 @@ const UserContextProvider = ({children}) => {
     const currentUser = users.all.find(user=> user._id === userId)
         setUsers(prev=>({
             ...prev, 
-            current: currentUser
+            current: currentUser,
+            adultLoggedIn: currentUser.adult
         }))
         updateUsers()
-        console.log(`current: ${currentUser.adult }`)
-        if (currentUser !== null) {
-          setUsers(prevState=>(
-            {adultLoggedIn: currentUser.adult}
-            ))
+        
         }
-  }
+  
   return (
     <UserContext.Provider
       value={{

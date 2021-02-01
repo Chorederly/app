@@ -2,20 +2,21 @@ import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import {UserContext} from '../context/UserContext'
 import {ChoreContext} from '../context/ChoreContext'
-import ChoreCard from './ChoreCard'
+import ChoreCard from './Card_Chore'
 
 const Wrapper = styled.div `
 display: flex;
 flex-direction: column;
 padding: 10px 0px ;
-background-color: ${props => props.theme.dark};
-width: 100vw;
+margin: 0 auto;
+width: 80vw;
 `
 const Header = styled.h1 `
-background-color: ${props => props.theme.secondary_highlight};
+//background-color: ${props => props.theme.dark_25};
   color: ${props => props.theme.dark};
   width: 100%;
   text-align: center;
+  border-bottom: thick solid ${props => props.theme.dark};
 `
 const Row = styled.div `
 
@@ -26,7 +27,7 @@ const Paragraph = styled.p `
 display: block;
 color: ${props => props.theme.light};
 `
-const UserChores = (props) => {
+const UserChoresGroup = (props) => {
   const {users} = useContext(UserContext)
   const {chores} = useContext(ChoreContext)
 
@@ -50,4 +51,4 @@ const UserChores = (props) => {
   )
 }
 
-export default UserChores
+export default UserChoresGroup

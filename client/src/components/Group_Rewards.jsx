@@ -6,7 +6,7 @@ import {ChoreContextProvider} from './context/ChoreContext'
 function RewardMenu(props){
 
     return (
-
+<div></div>
     )
 }
 export default RewardMenu
