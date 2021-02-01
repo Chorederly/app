@@ -45,6 +45,7 @@ const UserChores = (props) => {
           ...chore
         } />)
         : <Paragraph>{`${users.current.userName} has no current chores assigned.`}</Paragraph>}
+        
     </Wrapper>
   )
 }

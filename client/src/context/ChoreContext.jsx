@@ -25,6 +25,13 @@ const ChoreContextProvider = ({children}) => {
       })
       .catch(err => console.log(err))
   }
+  function deleteChore(choreId) {
+    axios.delete(`/chores/${choreId}`)
+    .then(res => {
+        setChores(prevChores => prevChores.filter(chore => chore._id !== choreId))
+    })
+    .catch(err => console.log(err))
+  }
   useEffect(() => {
     updateChores()
   }, [])
@@ -80,7 +87,8 @@ const ChoreContextProvider = ({children}) => {
       assignChore,
       updateChores,
       updateOneChore,
-      markCompleted
+      markCompleted,
+      deleteChore
     }}>
       {children}
     </ChoreContext.Provider>

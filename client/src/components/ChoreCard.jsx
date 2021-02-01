@@ -4,7 +4,7 @@ import styled, {withTheme} from 'styled-components'
 import {UserContext} from '../context/UserContext'
 import {ChoreContext} from '../context/ChoreContext'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faWindowClose, faPlusCircle, faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons'
+import {faWindowClose, faPlusCircle, faCaretDown, faCaretUp, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
 //styled components - notice the ${props =>props.theme....}, that is a callback function inside a template litteral ands is how you access props you pass to the element through attributes in the JSX or through the theme context
 const CardWrapper = styled.div `
@@ -89,6 +89,19 @@ const Paragraph = styled.p `
       
       }
 `
+const Button = styled(FontAwesomeIcon)`
+  color: ${props=>props.theme.colors.red};
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  text-shadow: 2px 2px 5px #000;
+  transition: .2s ease all;
+  cursor: pointer;
+  &:hover{
+    color: ${props=>props.theme.colors.red_light};
+  }
+`
 
 const Chore = props => {
   //access the methods and data passed through context - used to give functionality to the buttons, checkmark, etc
@@ -143,6 +156,7 @@ const Chore = props => {
           ? <Paragraph>{props.details}</Paragraph>
           : null}
       </Row>
+      <Button icon={faTrashAlt} onClick={() => props.deleteChore}>Delete Chore</Button>
       <Toggle onClick={toggleExpanded} icon={expanded ? faCaretUp : faCaretDown}/>
       
     </CardWrapper>
