@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
 import {UserContext} from '../context/UserContext'
-import ChoreGroup from '../components/Group_Chores'
-import UserGroup from '../components/Group_Users'
-import UsersChoresGroup from '../components/Group_UsersChores'
+import ChoreGroup from '../components/groups/Chores'
+import UserGroup from '../components/groups/Users'
+import UsersChoresGroup from '../components/groups/UsersChores'
 import Intro from '../components/Intro'
 
 const ProfileWrapper = styled.div `
@@ -15,7 +15,7 @@ const ProfileWrapper = styled.div `
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow-y: hidden;
+        //overflow-y: hidden;
         `
 const Row = styled.div `
                 height: 1rem;

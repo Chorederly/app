@@ -80,9 +80,12 @@ choreRouter.put("/resetAll" ,(req, res, next)=>{
         }
         return res.status(201).send(updatedChores)
     })}
-    if (weekly) reset("weekly")
-    if (daily) reset("daily")
-    if (asneeded) reset("as needed")
+    //if (weekly) 
+    reset("weekly")
+    //if (daily) 
+    reset("daily")
+    //if (asneeded) 
+    reset("as needed")
     return("done")
 })
 module.exports = choreRouter

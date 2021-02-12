@@ -3,11 +3,17 @@ import {useHistory} from 'react-router-dom'
 import styled, {ThemeProvider} from 'styled-components'
 import {UserContext} from '../context/UserContext'
 import {ChoreContext} from '../context/ChoreContext'
-import NewChoreForm from './Form_NewChores'
-import NewUserForm from './Form_NewUser'
+import NewChoreForm from './forms/NewChores'
+import NewUserForm from './forms/NewUser'
+import NewRewardForm from './forms/NewReward'
 
 const Wrapper = styled.div `
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-around;
+    width: 100%;
+
 `
 const Header = styled.h1 `
     text-align: center;
@@ -20,16 +26,51 @@ const Tagline = styled.h5 `
 const Paragraph = styled.p `
 
 `
+const Button = styled.button`
+  background-color: ${props=>props.theme.dark};
+  color: ${props=>props.theme.highlight};
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  margin: 10px;
+`
+const Row = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`
 const List = styled.ul ``
 const Item = styled.li ``
 function Controls(props) {
+  const [state, setState] = useState({
+    chore: false,
+    user: false, 
+    reward: false
+  })
+  const toggle = (form) =>{
+    setState(prev=>({
+      chore: false,
+      user: false,
+      reward: false,
+      [form]: !prev[form]
+    }))
+  }
+
   const history = useHistory()
   const {users} = useContext(UserContext)
   return (
     users.adultLoggedIn
     ? <Wrapper>
-        <NewChoreForm/>
-        <NewUserForm/>
+      {state.chore ?
+        <NewChoreForm callback={toggle}/> : null }
+        {state.user ? 
+        <NewUserForm callback={toggle}/> : null }
+        {state.reward ?
+        <NewRewardForm callback={toggle}/> : null }
+        <Row>
+          {state.chore ? null : <Button onClick={(e)=>toggle("chore")}>Add Chore</Button>}
+          {state.user ? null : <Button onClick={(e)=>toggle("user")}>Add User</Button>}
+          {state.reward ? null : <Button onClick={(e)=>toggle("reward")}>Add Reward</Button>}
+        </Row>
       </Wrapper>
     : null)
 }

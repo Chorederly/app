@@ -1,19 +1,22 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
+import {ChoreContext} from './ChoreContext'
 
 const UserContext = React.createContext(null)
 
 const UserContextProvider = ({children}) => {
   const [users,
     setUsers] = useState({all: [], current: null, adultLoggedIn: false})
-
+  
+  const {chores, unassignChore} = useContext(ChoreContext)
+  
   const addUser = (info) => {
     axios
       .post("/users", info)
       .then(resp => {
-        console.log("user added")
+        updateUsers() 
       })
-      .catch(err => console.log(`${info.userName} user in use`))
+      .catch(err => console.log(err))
   }
 
   const updateUsers = () => {
@@ -25,10 +28,12 @@ const UserContextProvider = ({children}) => {
           ...prev,
           all: resp.data
         }))
-        if (users.current !== null) {
-          setUsers(prevState=>(
-            {adultLoggedIn: prevState.current.adult}
-            ))
+        if (resp.data.current !== null) {
+          const currentUser = resp.data.all.find(user=> user._id === users.current._id)
+          setUsers({
+              current: currentUser,
+              adultLoggedIn: currentUser.adult}
+          )
         }
       })
       .catch(err => console.log(err))
@@ -36,7 +41,10 @@ const UserContextProvider = ({children}) => {
   function deleteUser(userId) {
     axios.delete(`/users/${userId}`)
     .then(res => {
-        setUsers(prevUsers => prevUsers.filter(user => user._id !== userId))
+      const choresToUnassign = chores.filter(chore=>chore.user = userId)
+      choresToUnassign.map(chore=>unassignChore(chore._id))
+      updateUsers();  
+      //setUsers(prevUsers => prevUsers.all.filter(user => user._id !== userId))
     })
     .catch(err => console.log(err))
 }
@@ -45,7 +53,7 @@ const UserContextProvider = ({children}) => {
   }, [])
   
   const collectPoints = (points, userId)=>{
-    axios.put(`/users/${userId}, {points}`).then(resp=>{
+    axios.put(`/users/${userId}`, {points: points}).then(resp=>{
       updateUsers();
     }).catch(err=>console.log(err))
   }
@@ -60,7 +68,12 @@ const UserContextProvider = ({children}) => {
         updateUsers()
         
         }
-  
+  const signOut = ()=>{
+    setUsers(prev=>({
+      ...prev,
+      current: null
+    }))
+  }
   return (
     <UserContext.Provider
       value={{
@@ -69,7 +82,9 @@ const UserContextProvider = ({children}) => {
       updateUsers,
       addUser, 
       signIn,
-      deleteUser
+      deleteUser, 
+      collectPoints,
+      signOut
     }}>
       {children}
     </UserContext.Provider>

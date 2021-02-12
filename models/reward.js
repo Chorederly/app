@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const choreSchema = new Schema({
-    name: {
+const rewardSchema = new Schema({
+    title: {
         type: String,
         required: true
     },
@@ -21,4 +21,4 @@ const choreSchema = new Schema({
 
 })
         
-module.exports = mongoose.model("Chore", choreSchema)
+module.exports = mongoose.model("Reward", rewardSchema)

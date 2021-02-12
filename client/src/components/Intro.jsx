@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom'
 import {UserContext} from '../context/UserContext'
 import {ChoreContext} from '../context/ChoreContext'
 import Keypad from '../components/Keypad'
-import NewUserForm from './Form_NewUser'
+import NewUserForm from './forms/NewUser'
 
 const Wrapper = styled.div `
     display: flex;
@@ -69,10 +69,10 @@ function Intro(props) {
     </Wrapper>
   )
 }
-{/* <Label>Name: 
+{/* <Label>Name:
   <Input name="name" value={state.name} onChange={handleChange}/>
 </Label>
-<Label htmlFor="pin">PIN: 
+<Label htmlFor="pin">PIN:
   <Input name="pin" value={state.pin} onChange={handleChange}/>
 </Label>
   <Button onClick={handleSubmit}>Done</Button> */}

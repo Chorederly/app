@@ -17,11 +17,9 @@ const ChoreContextProvider = ({children}) => {
     axios
       .get("/chores")
       .then(resp => {
-        console.log(resp)
-        console.log(`setting Chores from: ${chores}`)
         const orderedChores = resp.data.sort((a, b)=> a.completed - b.completed)
         setChores(orderedChores)
-        console.log(`to: ${chores}`)
+        
       })
       .catch(err => console.log(err))
   }
@@ -88,7 +86,8 @@ const ChoreContextProvider = ({children}) => {
       updateChores,
       updateOneChore,
       markCompleted,
-      deleteChore
+      deleteChore,
+      resetChores
     }}>
       {children}
     </ChoreContext.Provider>

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
-import UserGroup from '../components/Group_Users'
+import UserGroup from '../components/groups/Users'
 import {UserContext} from '../context/UserContext'
 const HomeWrapper = styled.div `
     margin: 0;

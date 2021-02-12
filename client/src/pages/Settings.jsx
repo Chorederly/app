@@ -6,11 +6,13 @@ import Controls from '../components/Controls'
 const SettingsWrapper = styled.div `
         margin: 0;
         padding: 0;
+        padding-top: 50px;
         box-sizing: border-box;
         width: 100%;
         height: 100vh;
         display: flex;
         flex-direction: column;
+        justify-content: center;
     `
 function Settings() {
   const {users} = useContext(UserContext)

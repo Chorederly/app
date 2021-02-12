@@ -16,6 +16,7 @@ mongoose.connect("mongodb://localhost:27017/todo-choresdb", {
 
 app.use("/chores", require("./routes/choreRouter.js"))
 app.use("/users", require("./routes/userRouter.js"))
+app.use("/rewards", require("./routes/rewardRouter.js"))
 
 app.use((err, req, res, next) => {
     console.log(err)
