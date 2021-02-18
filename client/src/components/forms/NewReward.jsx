@@ -32,7 +32,8 @@ const {rewards, addReward} = useContext(RewardContext)
   const handleSubmit = (e) => {
     e.preventDefault()
     addReward(state)
-    setState({title: "", details: "", pointCost: 0,  needsAproval: false})
+    props.makeToast("Reward added!")
+    setState(initialState)
     // axios
     //   .post("/rewards", state)
     //   .then(resp => {

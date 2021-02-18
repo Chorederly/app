@@ -16,7 +16,7 @@ const UserChoresGroup = (props) => {
         {users.current.userName}'s Chores
       </Header>
       {usersChores.length
-        ? usersChores.map(chore =><ChoreCard key={chore._id} {...chore} />)
+        ? usersChores.map(chore =><ChoreCard makeToast={props.makeToast} key={chore._id} {...chore} />)
         : <Paragraph>{`${users.current.userName} has no current chores assigned.`}</Paragraph>}
     </Wrapper>
   )

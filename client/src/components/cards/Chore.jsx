@@ -1,14 +1,15 @@
 //Representation of a chore, both for selecting a chore and as your todo list
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useRef} from 'react'
 import styled, {withTheme} from 'styled-components'
 import {UserContext} from '../../context/UserContext'
 import {ChoreContext} from '../../context/ChoreContext'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faWindowClose, faStar, faPlusCircle, faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons'
-import {CardWrapper, Row, Header, Paragraph, Close, Add, Toggle, Checkbox, SubHeader, Star, PointsContainer} from './elementsForCards'
-
+import {CardWrapper, Row, Header, Paragraph, Close, Add, Toggle, Checkbox, SubHeader, Star, PointsContainer, HiddenText} from './elementsForCards'
+import '../../animations.css'
 
 const ChoreCard = props => {
+  const animationRef = useRef(null)
   const {users, updateUsers, collectPoints} = useContext(UserContext)
   const {assignChore, unAssignChore, markCompleted, updateChores, updateOneChore} = useContext(ChoreContext)
   const [expanded,
@@ -31,8 +32,7 @@ const ChoreCard = props => {
           ]
         })
         updateChores()
-        console.log(users.current.points)
-        console.log(props.pointValue)
+        props.makeToast(`+${props.pointValue} points!`)
         collectPoints(users.current.points + props.pointValue, props.user)
         updateUsers()
       } else {
@@ -41,7 +41,7 @@ const ChoreCard = props => {
         props
           .history
           .splice(-1, 1)
-        console.log(`props.history: ${props.history}`)
+          props.makeToast(`-${props.pointValue} points`)
         updateOneChore(props._id, {
           completed: false,
           history: props.history
@@ -50,13 +50,21 @@ const ChoreCard = props => {
       }
     }
   }
+  const handleClose = (e) => {
+    animationRef.current.style.opacity = "0"
+//    animationRef.current.style.animation = null
+  //  animationRef.current.style.right = "-200px"
+    setTimeout(() => {
+      unAssignChore(props._id)
+    }, 400);
+  }
   return (
-    <CardWrapper>
+    <CardWrapper ref={animationRef}>
       {props.user === null
         ? <Add
             icon={faPlusCircle}
             onClick={(e) => assignChore(props._id, users.current._id)}/>
-        : <Close icon={faWindowClose} onClick={(e) => unAssignChore(props._id)}/>}
+        : <Close icon={faWindowClose} onClick={handleClose}/>}
       
         <Checkbox
           type="checkbox"
@@ -64,18 +72,17 @@ const ChoreCard = props => {
           checked={props.completed}
           name="completed"/>
         <Header column="2/4" completed={props.completed}>{props.name}</Header>
-        <SubHeader column="2/3" completed={props.completed}>{props.frequency}</SubHeader>
+        <Paragraph column="2/3" completed={props.completed}>{props.frequency}</Paragraph>
         <PointsContainer>
         <Paragraph column="4/5">{props.pointValue}</Paragraph><Star icon={faStar}/>
         </PointsContainer>
-      
 
       <Row>
         {expanded
-          ? <Paragraph>{props.details}</Paragraph>
+          ? <HiddenText>{props.details}</HiddenText>
           : null}
       </Row>
-      {props.details.length > 0
+      {props.details && props.details.length > 0
         ? <Toggle
             onClick={toggleExpanded}
             icon={expanded

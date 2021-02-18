@@ -14,13 +14,13 @@ const SettingsWrapper = styled.div `
         flex-direction: column;
         justify-content: center;
     `
-function Settings() {
+function Settings(props) {
   const {users} = useContext(UserContext)
   return (
     <SettingsWrapper>
       {users.all.length === 0 ?
-      <Intro/>
-      : <Controls/>}
+      <Intro makeToast={props.makeToast}/>
+      : <Controls makeToast={props.makeToast}/>}
     </SettingsWrapper>
   )
 }

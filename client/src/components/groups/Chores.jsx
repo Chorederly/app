@@ -22,7 +22,7 @@ const ChoreGroup = props => {
   }, [chores])
 //create ChoreCard component for each available chore, passing in all the chore's properties as props
   const choreCards = available.map(
-  (chore) =>< ChoreCard key = {
+  (chore) =>< ChoreCard makeToast={props.makeToast} key = {
     chore._id
   }
   {

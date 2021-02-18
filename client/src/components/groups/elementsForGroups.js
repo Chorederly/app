@@ -5,10 +5,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 const Wrapper = styled.div `
 display: flex;
 flex-wrap: wrap;
-flex-direction: column;
-padding: 10px 0px ;
-margin: 10px auto;
-width: 80vw;
+flex-direction: row;
+padding: 0px 0px ;
+margin: 0;
+width: 100vw;
+height: 100%;
 `
 const Header = styled.h1 `
 //background-color: ${props=>props.theme.secondary_highlight};

@@ -18,7 +18,6 @@ const UserCard = props => {
     const handleClick=(e)=>{
         e.preventDefault()
         signIn(props._id)
-
     }
   return (
     <CardWrapper>

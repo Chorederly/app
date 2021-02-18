@@ -1,6 +1,10 @@
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
+        const Enter = keyframes`
+                0% {right: -400px;}
+                100%{right: 0px;}
+        `
 const FormWrapper = styled.form `
         background-color: ${props => props.theme.dark_50};
         padding: 0 15px;
@@ -12,7 +16,12 @@ const FormWrapper = styled.form `
         align-items: center;
         backdrop-filter: blur(5px);
         width: 100%;
+        position: relative;
+        right: 0;
+        animation: ${Enter} 1s ease-out;
+        transition: 400s position ease-out;
         `
+
 const Close = styled(FontAwesomeIcon)`
         color: ${props => props.theme.colors.red};
         position: absolute;

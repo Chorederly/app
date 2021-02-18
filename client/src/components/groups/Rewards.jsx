@@ -8,7 +8,7 @@ import {RewardSelector} from '../cards/RewardSector'
 import { RewardContext } from '../../context/RewardContext'
 function RewardMenu(props){
 const {rewards} = useContext(RewardContext)
-const selectorCards = rewards.map(r=><RewardSelector {...r}/>)
+const selectorCards = rewards.map(r=><RewardSelector makeToast={props.makeToast} {...r}/>)
 return (
     <Wrapper>
         {cards}

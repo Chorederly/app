@@ -1,10 +1,11 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import styled from 'styled-components'
 import {UserContext} from '../context/UserContext'
 import ChoreGroup from '../components/groups/Chores'
 import UserGroup from '../components/groups/Users'
 import UsersChoresGroup from '../components/groups/UsersChores'
 import Intro from '../components/Intro'
+import Toast from '../components/Toast'
 
 const ProfileWrapper = styled.div `
         margin: 0;
@@ -20,13 +21,13 @@ const ProfileWrapper = styled.div `
 const Row = styled.div `
                 height: 1rem;
         `
-function Profile() {
+function Profile(props) {
   const {users} = useContext(UserContext)
   return (
     <ProfileWrapper>
       {users.current === null
-        ? <UserGroup/>
-        : <> <UsersChoresGroup/> < ChoreGroup /> </>
+        ? <UserGroup makeToast={props.makeToast} />
+        : <> <UsersChoresGroup makeToast={props.makeToast}/> < ChoreGroup makeToast={props.makeToast}/> </>
 }
 
     </ProfileWrapper>

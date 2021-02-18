@@ -42,11 +42,16 @@ const List = styled.ul ``
 const Item = styled.li ``
 function Controls(props) {
   const [state, setState] = useState({
-    chore: false,
+    chore: true,
     user: false, 
     reward: false
   })
+  const [animations, setAnimations] = useState({enter: true, exit:false})
   const toggle = (form) =>{
+    setAnimations(prev=>({
+      enter: !prev.enter,
+      exit: !prev.exit
+    }))
     setState(prev=>({
       chore: false,
       user: false,
@@ -61,11 +66,11 @@ function Controls(props) {
     users.adultLoggedIn
     ? <Wrapper>
       {state.chore ?
-        <NewChoreForm callback={toggle}/> : null }
+        <NewChoreForm enter={animations.enter} exit={animations.exit} makeToast={props.makeToast} callback={toggle}/> : null }
         {state.user ? 
-        <NewUserForm callback={toggle}/> : null }
+        <NewUserForm makeToast={props.makeToast} callback={toggle}/> : null }
         {state.reward ?
-        <NewRewardForm callback={toggle}/> : null }
+        <NewRewardForm makeToast={props.makeToast} callback={toggle}/> : null }
         <Row>
           {state.chore ? null : <Button onClick={(e)=>toggle("chore")}>Add Chore</Button>}
           {state.user ? null : <Button onClick={(e)=>toggle("user")}>Add User</Button>}

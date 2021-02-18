@@ -1,0 +1,2 @@
+@keyframes breath-animation{0%{height:100px;width:100px}30%{height:400px;width:400px;opacity:1}40%{height:405px;width:405px;opacity:.3}to{height:100px;width:100px;opacity:.6}}.breathe{animation:breath-animation 4s ease-in-out}
+/*# sourceMappingURL=main.e099deea.chunk.css.map */

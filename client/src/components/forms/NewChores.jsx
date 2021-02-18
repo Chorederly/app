@@ -4,26 +4,39 @@ import styled from 'styled-components'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faWindowClose} from '@fortawesome/free-solid-svg-icons'
-import {TextArea, Radio, Button, Row, Input, SubHeader, Select, Header, Option, Label, Close, FormWrapper} from './elementsForForms'
-
+import {
+  TextArea,
+  Radio,
+  Button,
+  Row,
+  Input,
+  SubHeader,
+  Select,
+  Header,
+  Option,
+  Label,
+  Close,
+  FormWrapper
+} from './elementsForForms'
 
 function NewChoreForm(props) {
-    const initialState = {
-        title: "",
-        description: "",
-        frequency: "as needed",
-        pointValue: 0,
-        needsApproval: false
-    }
+  const initialState = {
+    title: "",
+    description: "",
+    frequency: "as needed",
+    pointValue: 0,
+    needsApproval: false
+  }
+
   //standard controlled component form-handling
   const [state,
     setState] = useState(initialState)
-
+    
   const handleChange = (e) => {
     const {name, value, type} = e.target
     if (type === "checkbox") {
       setState(prev => ({
-          ...prev,
+        ...prev,
         [name]: !prev[name]
       }))
     } else {
@@ -33,19 +46,22 @@ function NewChoreForm(props) {
       }))
     }
   }
-  //When form is submitted we make a new
+  //When form is submitted we make a new`
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
       .post("/chores", state)
       .then(resp => {
-        console.log("chore added")
+        props.makeToast("Chore added!")
+        setState(initialState)
+        props.callback()
       })
       .catch(err => console.log(err))
   }
 
   return (
-    <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper enter={props.enter} exit={props.exit} onSubmit={handleSubmit}>
+
       <Row>
         <Header>
           Add New Chore
@@ -91,7 +107,11 @@ function NewChoreForm(props) {
         checked={state.needsAproval}
         onChange={handleChange}/>
       <Button type="submit">Add</Button>
-      <Close icon={faWindowClose} onClick={(e)=>{props.callback("chore")}}/>
+      <Close
+        icon={faWindowClose}
+        onClick={(e) => {
+        props.callback("chore")
+      }}/>
     </FormWrapper>
   )
 }

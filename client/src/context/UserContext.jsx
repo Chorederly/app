@@ -23,18 +23,18 @@ const UserContextProvider = ({children}) => {
     axios
       .get("/users")
       .then(resp => {
-        console.log(resp)
+        console.log(resp.data)
         setUsers(prev => ({
           ...prev,
           all: resp.data
         }))
-        if (resp.data.current !== null) {
-          const currentUser = resp.data.all.find(user=> user._id === users.current._id)
-          setUsers({
-              current: currentUser,
-              adultLoggedIn: currentUser.adult}
-          )
-        }
+      //   if (resp.data.current !== null) {
+      //     const currentUser = resp.data.all.find(user=> user._id === users.current._id)
+      //     setUsers({
+      //         current: currentUser,
+      //         adultLoggedIn: currentUser.adult}
+      //     )
+      //   }
       })
       .catch(err => console.log(err))
   }

@@ -24,7 +24,7 @@ const UserGroup = props => {
   const {rewards} = useContext(RewardContext)
   const userCards = users
     .all
-    .map((user) =>< UserCard key={user._id} {...user} editMode={editMode}
+    .map((user) =>< UserCard makeToast={props.makeToast} key={user._id} {...user} editMode={editMode}
     chores = {chores.filter(chore=>chore.user === user._id)} />)
 
   return (
