@@ -20,7 +20,25 @@ const FormWrapper = styled.form `
         right: 0;
         animation: ${Enter} 1s ease-out;
         transition: 400s position ease-out;
+        @media only screen and (min-width: 1200px){
+            background-color: ${props => props.theme.dark_50};
+            padding: 5px 32px;
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            //box-shadow: 2px 2px 2px 2px rgba(35, 35, 35, .5);
+            place-content: center;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            width: 40%;
+            height: 220px;
+            position: relative;
+            right: 0;
+            animation: ${Enter} 1s ease-out;
+            transition: 400s position ease-out;
+        }
         `
+
 
 const Close = styled(FontAwesomeIcon)`
         color: ${props => props.theme.colors.red};

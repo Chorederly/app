@@ -26,16 +26,21 @@ const UserGroup = props => {
     .all
     .map((user) =>< UserCard makeToast={props.makeToast} key={user._id} {...user} editMode={editMode}
     chores = {chores.filter(chore=>chore.user === user._id)} />)
-
+const AllUserCards = styled.div `
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minMax,(300px, 1fr));
+`
   return (
     <Wrapper>
       <EditButton icon={faUserEdit} onClick={toggleEditMode}></EditButton>
         <Header>Who Are You?</Header>
-      {userCards}
-      <CardWrapper>
-      <AddButton icon={faUserPlus} onClick={toggleAddMode}></AddButton>
-      <SubHeader>New User</SubHeader>
-      </CardWrapper>
+        <AllUserCards>
+          {userCards}
+          <CardWrapper>
+          <AddButton icon={faUserPlus} onClick={toggleAddMode}></AddButton>
+          <SubHeader>New User</SubHeader>
+          </CardWrapper>
+        </AllUserCards>
         <Modal show={addMode}>
         <NewUserForm callback={toggleAddMode}/>
       </Modal>

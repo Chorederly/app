@@ -30,7 +30,36 @@ const CardWrapper = styled.div`
   backdrop-filter: blur(4px);
   position: relative;
   justify-content: center; 
-    } 
+    }
+  @media only screen and (min-width: 1200px){  
+  display: grid;
+  grid-template-columns: auto;
+  align-items: center; 
+  //flex-direction:  column;
+  border-radius: 5px;
+  max-width: 25%;
+  min-width: 25%;
+  //height: auto;
+  min-height: 25%;
+  max-height: 25%;
+  padding: 10px 35px;
+  margin: auto;
+  background-color: ${props => props.theme.light_50};
+  color: ${props => props.theme.colors.dark};
+  position: relative;
+  transition: 400ms all ease;
+  backdrop-filter: blur(2px);
+  animation: ${Entrance} 1s ease-in-out forwards;
+  transition: 400s all ease-in-out;
+  box-shadow: 0 2px 2px rgba(35, 35, 35, .5);
+  &:hover{
+    box-shadow: 0 2px 5px 4px rgba(35, 35, 35, .5);
+  backdrop-filter: blur(4px);
+  position: relative;
+  justify-content: center; 
+    }
+  
+  } 
 `
 const Area = styled.div`
   grid-column: ${props=>props.row ? props.row : null};
@@ -50,6 +79,13 @@ font-size: 20px;
 color: ${props=>props.theme.highlight};
 filter: drop-shadow(0 0 2px #232323);
 margin: 0 5px;
+@media only screen and (min-width: 1200px){
+  display: inline;
+  font-size: 40px;
+  color: ${props=>props.theme.highlight};
+  filter: drop-shadow(0 0 2px #232323);
+  margin: auto;
+}
 `
 const Header = styled.h2 `
 color: ${props=>props.theme.dark};
@@ -63,6 +99,19 @@ text-decoration: ${props => {
     return props.completed
       ? "line-through red"
       : "none"}};
+@media only screen and (min-width: 1200px){
+  color: ${props=>props.theme.dark};
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  grid-column: ${props=>props.column ? props.column : null};
+  grid-row: ${props=>props.row ? props.row : null};
+  cursor: pointer;
+  padding: 0 5px;
+  text-decoration: ${props => {
+      return props.completed
+        ? "line-through red"
+        : "none"}};
+}
 `
 const List = styled.ul`
 list-style: none;
@@ -186,5 +235,7 @@ const PointsContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
+
+
 export {CardWrapper, Row, Header, List, Paragraph, Button, Close, Add, Toggle, Checkbox, Star, SubHeader, Overlay, PointsContainer, HiddenText}
 
